@@ -124,7 +124,7 @@ def main():
             audio = call_playht(answer)
             f.write(audio)
 
-        #upload_file_to_server(audio_filename)
+        upload_file_to_server(audio_filename)
         audio_url = 'https://' + os.getenv('FILE_SERVER_URL') + '/retrieve/' + audio_filename
         picture_url = os.getenv('IMAGE_URL')
 
