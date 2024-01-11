@@ -13,13 +13,13 @@ def main():
 
     while not exitloop:
         question = input("Ask FDR a question: ")
-        answer = call_chatgpt(question)
+        answer = call_chatgpt(question, "You are the president Franklin Delano Roosevelt in a high school history class. You are answering student questions about your life. Try to answer in three sentences or less")
 
         # generate unique filename
         audio_filename = str(uuid.uuid4()) + '.wav'
 
         with open(audio_filename, mode='bx') as f:
-            audio = call_playht(answer)
+            audio = call_playht(answer, voice="s3://voice-cloning-zero-shot/807979aa-6c63-42eb-8643-b94239115b64/fdr/manifest.json")
             f.write(audio)
 
         upload_file_to_server(audio_filename)
