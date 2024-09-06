@@ -15,45 +15,6 @@ GOOGLE_SHEET_ID = os.getenv('GOOGLE_SHEET_ID')
 ###############################################
 
 def main():
-    
-    # load up available voices and PlayHT voice URLs from Google Sheet
-    # authenticate w Google
-    creds = GoogleAuth.getCreds()
-    sheet_service = build('sheets', 'v4', credentials=creds)
-    drive_service = build('drive', 'v3', credentials=creds)
-
-    # load up Google Sheets
-    sheet = sheet_service.spreadsheets()
-
-    # dictionaries to hold voices, folders; list to hold questions
-    voices = get_voices(sheet) # KEY voice name VAL Voice objects
-    folder_ids = get_folders(sheet) # KEY group name VAL folder ID
-    questions = get_questions(sheet)
-
-    # iterate through questions
-    for question in questions:
-
-        print(question.question)
-        # get the question response from ChatGPT
-        response = call_chatgpt(question.question, voices[question.voice].prompt)
-        print(response)
-
-        # call PlayHT to generate the audio file
-        # generate unique filename
-        audio_filename = question.group + str(uuid.uuid4()) + '.wav'
-
-        print('Writing audio to file...')
-        with open(audio_filename, mode='bx') as f:
-            audio = call_playht(response, voice=voices[question.voice].voice_url)
-            f.write(audio)
-        print('Audio creation complete')
-
-        upload_to_google_drive(audio_filename, folder_ids[question.group], drive_service)
-    
-    print('Execution complete')
-    exit()
-
-def main():
     group_name = 'Group 1'
     voice_name = 'Winston Churchill'
     question = 'What was your most cherished possession?'

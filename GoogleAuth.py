@@ -27,3 +27,6 @@ def getCreds():
         with open('token.json', 'w') as token:
             token.write(creds.to_json())
     return creds
+
+if __name__ == '__main__':
+    getCreds()
